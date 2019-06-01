@@ -14,6 +14,7 @@
 		28EA9E7A22A30861000CB6C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28EA9E7822A30861000CB6C4 /* Main.storyboard */; };
 		28EA9E7C22A30861000CB6C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 28EA9E7B22A30861000CB6C4 /* Assets.xcassets */; };
 		28EA9E7F22A30861000CB6C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28EA9E7D22A30861000CB6C4 /* LaunchScreen.storyboard */; };
+		28EA9E8822A30A8E000CB6C4 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28EA9E8722A30A8E000CB6C4 /* PDFKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		28EA9E7B22A30861000CB6C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		28EA9E7E22A30861000CB6C4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		28EA9E8022A30861000CB6C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		28EA9E8722A30A8E000CB6C4 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28EA9E8822A30A8E000CB6C4 /* PDFKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +47,7 @@
 			children = (
 				28EA9E6F22A30860000CB6C4 /* PDF Arranger */,
 				28EA9E6E22A30860000CB6C4 /* Products */,
+				28EA9E8622A30A8E000CB6C4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,6 +72,14 @@
 				28EA9E8022A30861000CB6C4 /* Info.plist */,
 			);
 			path = "PDF Arranger";
+			sourceTree = "<group>";
+		};
+		28EA9E8622A30A8E000CB6C4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				28EA9E8722A30A8E000CB6C4 /* PDFKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
