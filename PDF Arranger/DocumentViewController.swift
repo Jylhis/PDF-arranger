@@ -13,6 +13,7 @@ class DocumentViewController: UIViewController {
     
     @IBOutlet weak var documentNameLabel: UILabel!
     @IBOutlet weak var pdfView: PDFView!
+    @IBOutlet weak var NavBar: UINavigationBar!
     
     var document: UIDocument?
     
@@ -23,17 +24,18 @@ class DocumentViewController: UIViewController {
         document?.open(completionHandler: { (success) in
             if success {
                 // Display the content of the document, e.g.:
-                self.documentNameLabel.text = self.document?.fileURL.absoluteString
+          //      self.documentNameLabel.text = self.document?.fileURL.absoluteString
                 
-               // if let path = Bundle.main.path(forResource: self.document?.fileURL.lastPathComponent, ofType: "pdf") {
-                let url = URL(fileURLWithPath: (self.document?.fileURL.absoluteString)!)
-                    if let pdfDocument = PDFDocument(url: url) {
+             //   if let path = Bundle.main.path(forResource: , ofType: "pdf") {
+                //let url = URL(fileURLWithPath: self.document?.fileURL)
+                self.NavBar.topItem?.title = self.document?.fileURL.lastPathComponent
+                if let pdfDocument = PDFDocument(url: self.document!.fileURL) {
                         self.pdfView.displayMode = .singlePageContinuous
                         self.pdfView.autoScales = true
                         // pdfView.displayDirection = .horizontal
                         self.pdfView.document = pdfDocument
                     }
-                //}
+            //    }
                 
             } else {
                 // Make sure to handle the failed import appropriately, e.g., by presenting an error message to the user.
