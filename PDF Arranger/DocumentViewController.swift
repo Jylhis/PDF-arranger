@@ -15,19 +15,16 @@ class DocumentViewController: UIViewController {
     @IBOutlet weak var pdfView: PDFView!
     @IBOutlet weak var NavBar: UINavigationBar!
     
-    
     var document: UIDocument?
     
-    
-    // TODO
     @IBAction func RemovePressed(_ sender: UIBarButtonItem) {
         let currentPage = self.pdfView.currentPage
         let pageNumber = pdfView.document!.index(for: currentPage!)
-        let alert = UIAlertController(title: "Are you sure?", message: "Page number \(pageNumber)", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Are you sure?", message: "Remove page number \(pageNumber+1)", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
             self.pdfView.document?.removePage(at: pageNumber)
-            //self.pdfView.render
+            self.pdfView.layoutDocumentView()
         }))
         alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
         
@@ -39,28 +36,57 @@ class DocumentViewController: UIViewController {
         let currentPage = self.pdfView.currentPage
         let pageNumber = pdfView.document!.index(for: currentPage!)
         
-        //1. Create the alert controller.
         let alert = UIAlertController(title: "Where?", message: "Where do you want to move this pge?", preferredStyle: .alert)
         
-        //2. Add the text field. You can configure it however you need.
-        alert.addTextField { (textField) in
-            textField.keyboardType = .numberPad
-            textField.text = "\(pageNumber)"
+        // TODO: korjaa pickerillä
+        alert.addTextField { (destinationPage) in
+            destinationPage.keyboardType = .numberPad
+            destinationPage.text = "\(pageNumber+1)"
         }
         
-        // 3. Grab the value from the text field, and print it when the user clicks OK.
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-            let textField = Int((alert?.textFields![0].text)!)// Force unwrapping because we know it exists.
-            self.pdfView.document?.insert(currentPage!, at: textField!)
-            //print("Text field: \(textField!.text)")
+            let destinationPageIndex = Int((alert?.textFields![0].text)!)!-1
+            
+            if(destinationPageIndex != pageNumber && destinationPageIndex < self.pdfView.document!.pageCount) {
+                self.pdfView.document?.removePage(at: pageNumber)
+                
+                // Looppaa kaikki sivut ja siirrä niitä yksi pykälä
+                // Looppaa alhaalta ylös
+                for page in (destinationPageIndex...self.pdfView.document!.pageCount).reversed() {
+                    let workingPageIndex = page != 0 ? page-1 : page
+                    self.pdfView.document?.insert(self.pdfView.document!.page(at: workingPageIndex)!, at: page)
+                    self.pdfView.document?.removePage(at: workingPageIndex)
+                }
+                
+                // laita kohde sivu kohteeseen
+                self.pdfView.document?.insert(currentPage!, at: destinationPageIndex)
+                
+                // Jos siirtää sivuja niin sivujen väliin jää tyhjää tilaa
+                // tämä väsäys päivittää koko näkymän
+                let newDoc = PDFDocument(data: self.pdfView.document!.dataRepresentation()!)
+                self.pdfView.document = newDoc
+                
+                // Hypää uuden sivun kohdalle
+                self.pdfView.go(to: self.pdfView.document!.page(at: destinationPageIndex)!)
+            }
+            
+            self.pdfView.layoutDocumentView()
         }))
         
-        // 4. Present the alert.
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func PressedSave(_ sender: UIBarButtonItem) {
-        self.pdfView.document?.write(to: <#T##URL#>)
+        let alert = UIAlertController(title: "Are you sure?", message: "This operation will overwrite the document", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+            self.pdfView.document?.write(to: self.document!.fileURL)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,21 +95,16 @@ class DocumentViewController: UIViewController {
         // Access the document
         document?.open(completionHandler: { (success) in
             if success {
-                // Display the content of the document, e.g.:
-          //      self.documentNameLabel.text = self.document?.fileURL.absoluteString
                 
-             //   if let path = Bundle.main.path(forResource: , ofType: "pdf") {
-                //let url = URL(fileURLWithPath: self.document?.fileURL)
                 self.NavBar.topItem?.title = self.document?.fileURL.lastPathComponent
                 if let pdfDocument = PDFDocument(url: self.document!.fileURL) {
-                        self.pdfView.displayMode = .singlePageContinuous
-                        self.pdfView.autoScales = true
-                        // pdfView.displayDirection = .horizontal
-                        self.pdfView.document = pdfDocument
-                    }
-            //    }
-                
+                    self.pdfView.displayMode = .singlePageContinuous
+                    self.pdfView.autoScales = true
+                    self.pdfView.document = pdfDocument
+                    self.pdfView.autoScales = true
+                }
             } else {
+                // TODO
                 // Make sure to handle the failed import appropriately, e.g., by presenting an error message to the user.
             }
         })
