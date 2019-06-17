@@ -15,6 +15,8 @@ class DocumentViewController: UIViewController {
     @IBOutlet weak var pdfView: PDFView!
     @IBOutlet weak var NavBar: UINavigationBar!
     
+    var modified = false
+    
     var document: UIDocument?
     
     @IBAction func RemovePressed(_ sender: UIBarButtonItem) {
@@ -25,6 +27,7 @@ class DocumentViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
             self.pdfView.document?.removePage(at: pageNumber)
             self.pdfView.layoutDocumentView()
+            self.modified = true
         }))
         alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
         
@@ -71,6 +74,7 @@ class DocumentViewController: UIViewController {
             }
             
             self.pdfView.layoutDocumentView()
+            self.modified = true
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -92,11 +96,6 @@ class DocumentViewController: UIViewController {
         } catch {
             print(error)
         }
-
-        
-//        guard let documentData = self.pdfView.document!.dataRepresentation() else { return }
-        //      let activityViewController = UIActivityViewController(activityItems: [documentData], applicationActivities: nil)
-            //UIActivityViewController(activityItems: [ self.pdfView.document!, "Name To Present to User"], applicationActivities: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -121,8 +120,24 @@ class DocumentViewController: UIViewController {
     }
     
     @IBAction func dismissDocumentViewController() {
-        dismiss(animated: true) {
-            self.document?.close(completionHandler: nil)
+        if self.modified {
+            let alert = UIAlertController(title: "Are you sure?", message: "All modfications will be lost", preferredStyle: .alert)
+            
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+                self.dismiss(animated: true) {
+                    self.document?.close(completionHandler: nil)
+                }
+                }))
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            self.dismiss(animated: true) {
+                self.document?.close(completionHandler: nil)
+            }
         }
+        
+       
     }
 }
