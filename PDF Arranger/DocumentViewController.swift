@@ -17,6 +17,8 @@ class DocumentViewController: UIViewController {
     
     var modified = false
     
+    var selectedPage : Int? = nil
+    
     var document: UIDocument?
     
     @IBAction func RemovePressed(_ sender: UIBarButtonItem) {
@@ -42,13 +44,25 @@ class DocumentViewController: UIViewController {
         let alert = UIAlertController(title: "Where?", message: "Where do you want to move this pge?", preferredStyle: .alert)
         
         // TODO: korjaa pickerillä
-        alert.addTextField { (destinationPage) in
-            destinationPage.keyboardType = .numberPad
-            destinationPage.text = "\(pageNumber+1)"
-        }
+       // alert.addTextField { (destinationPage) in
+         //   destinationPage.keyboardType = .numberPad
+         //   destinationPage.text = "\(pageNumber+1)"
+        //}
         
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-            let destinationPageIndex = Int((alert?.textFields![0].text)!)!-1
+        let vc = UIViewController()
+        vc.preferredContentSize = CGSize(width: 250,height: 150)
+        let pickerView = UIPickerView(frame: CGRect(x: 0, y: 0, width: 250, height: 150))
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        
+        pickerView.selectRow(pageNumber, inComponent: 0, animated: true)
+        self.selectedPage = pageNumber
+        
+        vc.view.addSubview(pickerView)
+        alert.setValue(vc, forKey: "contentViewController")
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [] (_) in
+            let destinationPageIndex =  self.selectedPage ?? pageNumber//Int((alert?.textFields![0].text)!)!-1
             
             if(destinationPageIndex != pageNumber && destinationPageIndex < self.pdfView.document!.pageCount) {
                 self.pdfView.document?.removePage(at: pageNumber)
@@ -91,7 +105,9 @@ class DocumentViewController: UIViewController {
             try self.pdfView.document?.dataRepresentation()?.write(to: temporaryFileURL)
             // your code
             let activityViewController = UIActivityViewController(activityItems: [temporaryFileURL], applicationActivities: nil)
-            present(activityViewController, animated: true, completion: nil)
+            present(activityViewController, animated: true) {
+                self.modified = false
+            }
 
         } catch {
             print(error)
@@ -140,4 +156,26 @@ class DocumentViewController: UIViewController {
         
        
     }
+}
+
+extension DocumentViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.pdfView.document!.pageCount
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        return String(row+1)
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.selectedPage = row
+        print(row)
+    }
+    
 }
