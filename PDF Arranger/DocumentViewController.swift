@@ -41,7 +41,7 @@ class DocumentViewController: UIViewController {
         let currentPage = self.pdfView.currentPage
         let pageNumber = pdfView.document!.index(for: currentPage!)
         
-        let alert = UIAlertController(title: "Where?", message: "Where do you want to move this pge?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Choose page", message: "", preferredStyle: .alert)
         
         // TODO: korjaa pickerillä
        // alert.addTextField { (destinationPage) in
