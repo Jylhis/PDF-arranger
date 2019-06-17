@@ -42,12 +42,12 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Title" id="9Qj-fI-cq1">
-                                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="mPd-pA-NMg">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="mPd-pA-NMg">
                                             <connections>
                                                 <action selector="dismissDocumentViewController" destination="M2k-L8-Olo" id="hrt-iW-Uh0"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="Gd6-Kw-wkz">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Gd6-Kw-wkz">
                                             <connections>
                                                 <action selector="PressedSave:" destination="M2k-L8-Olo" id="ufO-ti-bNS"/>
                                             </connections>

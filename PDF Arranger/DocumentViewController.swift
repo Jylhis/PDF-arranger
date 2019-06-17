@@ -78,15 +78,8 @@ class DocumentViewController: UIViewController {
     }
     
     @IBAction func PressedSave(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Are you sure?", message: "This operation will overwrite the document", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
-            self.pdfView.document?.write(to: self.document!.fileURL)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-        
-        self.present(alert, animated: true)
+        let activityViewController = UIActivityViewController(activityItems: ["Name To Present to User", self.pdfView.document!], applicationActivities: nil)
+        present(activityViewController, animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
