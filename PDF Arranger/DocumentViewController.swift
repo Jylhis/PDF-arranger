@@ -78,8 +78,25 @@ class DocumentViewController: UIViewController {
     }
     
     @IBAction func PressedSave(_ sender: UIBarButtonItem) {
-        let activityViewController = UIActivityViewController(activityItems: ["Name To Present to User", self.pdfView.document!], applicationActivities: nil)
-        present(activityViewController, animated: true, completion: nil)
+        
+        let temporaryFolder = FileManager.default.temporaryDirectory
+        let fileName = self.document!.fileURL.lastPathComponent
+        let temporaryFileURL = temporaryFolder.appendingPathComponent(fileName)
+        print(temporaryFileURL.path)  // /Users/lsd/Library/Developer/XCPGDevices/E2003834-07AB-4833-B206-843DC0A52967/data/Containers/Data/Application/322D1F1D-4C97-474C-9040-FE5E740D38CF/tmp/document.pdf
+        do {
+            try self.pdfView.document?.dataRepresentation()?.write(to: temporaryFileURL)
+            // your code
+            let activityViewController = UIActivityViewController(activityItems: [temporaryFileURL], applicationActivities: nil)
+            present(activityViewController, animated: true, completion: nil)
+
+        } catch {
+            print(error)
+        }
+
+        
+//        guard let documentData = self.pdfView.document!.dataRepresentation() else { return }
+        //      let activityViewController = UIActivityViewController(activityItems: [documentData], applicationActivities: nil)
+            //UIActivityViewController(activityItems: [ self.pdfView.document!, "Name To Present to User"], applicationActivities: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

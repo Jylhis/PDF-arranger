@@ -47,7 +47,7 @@
                                                 <action selector="dismissDocumentViewController" destination="M2k-L8-Olo" id="hrt-iW-Uh0"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Gd6-Kw-wkz">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="Gd6-Kw-wkz">
                                             <connections>
                                                 <action selector="PressedSave:" destination="M2k-L8-Olo" id="ufO-ti-bNS"/>
                                             </connections>
