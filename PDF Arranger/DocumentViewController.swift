@@ -145,7 +145,7 @@ class DocumentViewController: UIViewController {
             let alert = UIAlertController(title: "Are you sure?", message: "All modfications will be lost", preferredStyle: .alert)
             
             
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [] (_) in
                 self.dismiss(animated: true) {
                     self.document?.close(completionHandler: nil)
                 }
