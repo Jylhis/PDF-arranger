@@ -108,7 +108,12 @@ class DocumentViewController: UIViewController {
             present(activityViewController, animated: true) {
                 self.modified = false
             }
-
+            
+            if let popOver = activityViewController.popoverPresentationController {
+                //popOver.sourceView = self.view
+                //popOver.sourceRect =
+                popOver.barButtonItem = sender
+            }
         } catch {
             print(error)
         }
