@@ -8,6 +8,7 @@
 
 import UIKit
 import PDFKit
+import StoreKit
 
 class DocumentViewController: UIViewController {
     
@@ -20,6 +21,11 @@ class DocumentViewController: UIViewController {
     var selectedPage : Int? = nil
     
     var document: UIDocument?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+      
+    }
     
     @IBAction func RemovePressed(_ sender: UIBarButtonItem) {
         let currentPage = self.pdfView.currentPage

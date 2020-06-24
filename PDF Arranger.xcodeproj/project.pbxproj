@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28E7366322D61D8200FBD92B /* UsersDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E7366222D61D8100FBD92B /* UsersDefaults.swift */; };
 		28EA9E7122A30861000CB6C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9E7022A30861000CB6C4 /* AppDelegate.swift */; };
 		28EA9E7322A30861000CB6C4 /* DocumentBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9E7222A30861000CB6C4 /* DocumentBrowserViewController.swift */; };
 		28EA9E7522A30861000CB6C4 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28EA9E7422A30861000CB6C4 /* DocumentViewController.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		28E7366222D61D8100FBD92B /* UsersDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersDefaults.swift; sourceTree = "<group>"; };
 		28EA9E6D22A30860000CB6C4 /* PDF Arranger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PDF Arranger.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		28EA9E7022A30861000CB6C4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		28EA9E7222A30861000CB6C4 /* DocumentBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentBrowserViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				28EA9E7B22A30861000CB6C4 /* Assets.xcassets */,
 				28EA9E7D22A30861000CB6C4 /* LaunchScreen.storyboard */,
 				28EA9E8022A30861000CB6C4 /* Info.plist */,
+				28E7366222D61D8100FBD92B /* UsersDefaults.swift */,
 			);
 			path = "PDF Arranger";
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 				28EA9E7722A30861000CB6C4 /* Document.swift in Sources */,
 				28EA9E7522A30861000CB6C4 /* DocumentViewController.swift in Sources */,
 				28EA9E7322A30861000CB6C4 /* DocumentBrowserViewController.swift in Sources */,
+				28E7366322D61D8200FBD92B /* UsersDefaults.swift in Sources */,
 				28EA9E7122A30861000CB6C4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

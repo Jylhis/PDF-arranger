@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import StoreKit
 
 class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocumentBrowserViewControllerDelegate {
     
@@ -26,6 +26,33 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
         // Specify the allowed content types of your application via the Info.plist.
         
         // Do any additional setup after loading the view.
+        
+        //  UserDefaults.standard.set(0, forKey: "processCompletedCountKey")
+        //UserDefaults.standard.set("", forKey: "lastVersionPromptedForReviewKey")
+        //print("All checks have been reset")
+        
+        var count = UserDefaults.standard.integer(forKey: UsersDefaults.processCompletedCountKey)
+        if count == 1000 {
+            count = 0
+        }
+        count += 1
+        UserDefaults.standard.set(count, forKey: UsersDefaults.processCompletedCountKey)
+        
+        print(count)
+        // Get the current bundle version for the app
+        let infoDictionaryKey = kCFBundleVersionKey as String
+        guard let currentVersion = Bundle.main.object(forInfoDictionaryKey: infoDictionaryKey) as? String
+            else { fatalError("Expected to find a bundle version in the info dictionary") }
+        
+        let lastVersionPromptedForReview = UserDefaults.standard.string(forKey: UsersDefaults.lastVersionPromptedForReviewKey)
+        
+        // Has the process been completed several times and the user has not already been prompted for this version?
+        if (count >= 4 && currentVersion != lastVersionPromptedForReview)
+            || count == 12 || count%50 == 0 {
+            
+            SKStoreReviewController.requestReview()
+            UserDefaults.standard.set(currentVersion, forKey: UsersDefaults.lastVersionPromptedForReviewKey)
+        }
     }
     
     
